@@ -11,7 +11,7 @@ let imgData, data, ave;
 
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
-requestAnimationFrame(draw);
+animation = requestAnimationFrame(draw);
 
 function successCallback(stream) {
   video.srcObject = stream;
@@ -39,5 +39,5 @@ function draw() {
     }
 
   ctx.putImageData(imgData, 0, 0);
-  requestAnimationFrame(draw);
+  animation = requestAnimationFrame(draw);
 }
