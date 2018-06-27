@@ -17,18 +17,22 @@ function applyForm(head) {
   }
 };
 
+table.style.display = "none";
+
 function openQRMode() {
   table.style.display = "none";
+  canvas.style.display = "block";
 }
 
 function openTableMode() {
-  table.style.display = "block";
+  canvas.style.display = "none";
+  table.style.display = "inline";
 }
 
 applyForm(getDataHeading());
 applyForm(getDataValue());
 
-let imgData, data, ave;
+let imgData, data, ave, animation;
 
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
@@ -36,6 +40,7 @@ animation = requestAnimationFrame(draw);
 
 function successCallback(stream) {
   video.srcObject = stream;
+  animation = requestAnimationFrame(draw);
 };
 
 function errorCallback(err) {
