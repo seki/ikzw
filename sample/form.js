@@ -6,9 +6,13 @@ const medias = {audio : false, video : {
       video  = document.getElementById("video"),
       canvas = document.getElementById("canvas"),
       ctx    = canvas.getContext("2d"),
-      openQR = document.getElementById("openQR"),
-      closeQR = document.getElementById("closeQR"),
       table  = document.getElementById("form1");
+
+let imgData, data, ave, animation;
+
+navigator.getUserMedia(medias, successCallback, errorCallback);
+
+animation = requestAnimationFrame(draw);
 
 function applyForm(head) {
   for (var name in head) {
@@ -31,8 +35,6 @@ function openTableMode() {
 
 applyForm(getDataHeading());
 applyForm(getDataValue());
-
-let imgData, data, ave, animation;
 
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
