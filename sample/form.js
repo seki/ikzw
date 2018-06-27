@@ -5,7 +5,10 @@ const medias = {audio : false, video : {
       }},
       video  = document.getElementById("video"),
       canvas = document.getElementById("canvas"),
-      ctx    = canvas.getContext("2d");
+      ctx    = canvas.getContext("2d"),
+      openQR = document.getElementById("openQR"),
+      closeQR = document.getElementById("closeQR"),
+      table  = document.getElementById("form1");
 
 function applyForm(head) {
   for (var name in head) {
@@ -14,14 +17,22 @@ function applyForm(head) {
   }
 };
 
+function openQRMode() {
+  table.style.display = "none";
+}
+
+function openTableMode() {
+  table.style.display = "block";
+}
+
 applyForm(getDataHeading());
 applyForm(getDataValue());
 
 let imgData, data, ave;
 
-/* navigator.getUserMedia(medias, successCallback, errorCallback); */
+navigator.getUserMedia(medias, successCallback, errorCallback);
 
-/* animation = requestAnimationFrame(draw); */
+animation = requestAnimationFrame(draw);
 
 function successCallback(stream) {
   video.srcObject = stream;

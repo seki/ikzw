@@ -8,7 +8,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 </head>
 <body>
-  <div class="form1">
+    <input type="button" id="openQR" value="open QR" onclick="openQRMode();"/>
+    <input type="button" id="openTable" value="open Table" onclick="openTableMode();"/>
+  <div class="form1" id="form1">
     <table>
       <tr>
         <th colspan=2 id="th1">-</th>
@@ -73,6 +75,7 @@
     </table>
   </div>
   <canvas id="canvas"></canvas>
+  <script src="jsQR.js"></script>
   <script src="data.js"></script>
   <script src="form.js"></script>
 </body>
