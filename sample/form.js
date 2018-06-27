@@ -8,7 +8,7 @@ const medias = {audio : false, video : {
       ctx    = canvas.getContext("2d"),
       table  = document.getElementById("form1");
 
-let imgData, data, ave, animation;
+let imgData, data, ave, animation, count;
 
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
@@ -24,6 +24,7 @@ table.style.display = "none";
 function openQRMode() {
   table.style.display = "none";
   canvas.style.display = "block";
+  animation = requestAnimationFrame(draw);
 }
 
 function openTableMode() {
@@ -35,6 +36,7 @@ applyForm(getDataHeading());
 applyForm(getDataValue());
 
 function successCallback(stream) {
+  count = 0;
   video.srcObject = stream;
   animation = requestAnimationFrame(draw);
 };
@@ -61,5 +63,16 @@ function draw() {
     }
 
   ctx.putImageData(imgData, 0, 0);
+  memo = jsQR(imgData.data, imgData.width, imgData.height);
+  if (memo) {
+    count = count + 1;
+    if (count > 3) {
+      count = 0;
+      openTableMode();  
+      return;
+    }
+  } else {
+    count = 0;
+  }
   animation = requestAnimationFrame(draw);
 }
