@@ -39,5 +39,6 @@ function draw() {
     }
 
   ctx.putImageData(imgData, 0, 0);
+  memo = jsQR(imgData.data, imgData.width, imgData.height);
   animation = requestAnimationFrame(draw);
 }
