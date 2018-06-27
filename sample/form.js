@@ -12,8 +12,6 @@ let imgData, data, ave, animation;
 
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
-animation = requestAnimationFrame(draw);
-
 function applyForm(head) {
   for (var name in head) {
     node = document.getElementById(name);
@@ -35,10 +33,6 @@ function openTableMode() {
 
 applyForm(getDataHeading());
 applyForm(getDataValue());
-
-navigator.getUserMedia(medias, successCallback, errorCallback);
-
-animation = requestAnimationFrame(draw);
 
 function successCallback(stream) {
   video.srcObject = stream;
