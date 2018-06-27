@@ -1,0 +1,77 @@
+.form1 table {
+  border-collapse: collapse;
+  text-align: center;
+  /* width: 100%; */
+}
+
+#th3 {
+  width: 13em;
+}
+
+#th11, #th12, #th14 {
+  width: 8em;
+}
+
+#th13 {
+  width: 7em;
+}
+
+.form1 th {
+  padding: 3px .5em;
+  border: solid 1px orange;
+  font-weight: normal;
+}
+
+.form1 td {
+  padding: 3px .5em;
+  border: solid 1px orange;
+}
+
+td.td13 {
+  text-align: right;
+}
+
+#td4 {
+  text-align: right;
+  padding: 0.5em 1em;
+}
+
+#td7 {
+  text-align: right;
+}
+
+#td9 {
+  text-align: right;
+}
+
+#td10 {
+  text-align: right;
+}
+
+.form1 td {
+  font-size: 160%;
+}
+
+td.large {
+  border-top: solid 3px orange;
+  border-right: solid 3px orange;
+  border-bottom: solid 3px orange;
+}
+
+th.large {
+  border-top: solid 3px orange;
+  border-left: solid 3px orange;
+  border-bottom: solid 3px orange;
+}
+
+td.largev {
+  border-left: solid 3px orange;
+  border-right: solid 3px orange;
+  border-bottom: solid 3px orange;
+}
+
+th.largev {
+  border-top: solid 3px orange;
+  border-right: solid 3px orange;
+  border-left: solid 3px orange;
+}
