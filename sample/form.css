@@ -33,30 +33,42 @@ body {
 }
 
 #th3 {
-  width: 13em;
+  width: 34mm;
 }
 
-#th11, #th12, #th14 {
-  width: 8em;
+#th11 {
+  width: 25mm;
+}
+
+#th12 {
+  width: 23mm;
+}
+
+#th14 {
+  width: 24mm;
 }
 
 #th13 {
-  width: 7em;
+  width: 19mm;
 }
 
 .form1 th {
   padding: 3px .8em;
   border: solid 1px orange;
   font-weight: normal;
+  font-size: 60%;
+  height: 3.8mm;
 }
 
 .form1 td {
   padding: 3px .8em;
   border: solid 1px orange;
+  height: 7mm;
 }
 
 td.td13 {
   text-align: right;
+  height: 9mm;
 }
 
 #td4 {
@@ -74,6 +86,14 @@ td.td13 {
 
 #td10 {
   text-align: right;
+}
+
+#th11 {
+  height: 4.5mm;
+}
+
+#th10 {
+  height: 4.5mm;
 }
 
 .form1 td {
