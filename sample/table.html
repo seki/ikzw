@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
   <link rel="stylesheet" href="form.css" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
 </head>
 <body>
     <input type="button" id="openQR" value="open QR" onclick="openQRMode();"/>
@@ -13,12 +15,13 @@
   <div class="ticket1" id="table1">
     <table>
       <tr>
-        <th colspan=2 class="th1">-</th>
+        <td rowspan=2 class="qr"></td>
+        <th colspan=1 class="th1">-</th>
         <th colspan=2 class="th2">-</th>
         <th class="th3">-</th>
       </tr>
       <tr>
-        <td colspan=2 class="td1">-</td>
+        <td colspan=1 class="td1">-</td>
         <td colspan=2 class="td2">-</td>
         <td class="td3">-</td>
       </tr>
@@ -80,6 +83,8 @@
   <div id="videobox">
     <video id="video" autoplay playsinline></video>
   </div>
+  <script type="text/javascript" src="render.qrcode.min.js"></script>
+
   <script src="jsQR.js"></script>
   <script src="data.js"></script>
   <script src="form.js"></script>

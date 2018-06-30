@@ -66,6 +66,12 @@ body {
   height: 7mm;
 }
 
+.ticket1 .qr {
+  text-align: left;
+  border-left: 0;
+  border-top: 0;
+}
+
 .ticket1 td.td13 {
   text-align: right;
   height: 9mm;
@@ -110,7 +116,7 @@ body {
 }
 
 .ticket1 td {
-  font-size: 120%;
+  font-size: 110%;
 }
 
 .ticket1 td.large {
