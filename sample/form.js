@@ -6,16 +6,16 @@ const medias = {audio : false, video : {
       video  = document.getElementById("video"),
       canvas = document.getElementById("canvas"),
       ctx    = canvas.getContext("2d"),
-      table  = document.getElementById("form1");
+      table  = document.getElementById("table1");
 
 let imgData, data, ave, animation, count;
 
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
-function applyForm(head) {
+function applyForm(table, head) {
   for (var name in head) {
-    node = document.getElementById(name);
-    node.textContent = head[name];
+    node = table.getElementsByClassName(name);
+    node[0].textContent = head[name];
   }
 };
 
@@ -32,8 +32,8 @@ function openTableMode() {
   table.style.display = "inline";
 }
 
-applyForm(getDataHeading());
-applyForm(getDataValue());
+applyForm(table, getDataHeading());
+applyForm(table, getDataValue());
 
 function successCallback(stream) {
   count = 0;

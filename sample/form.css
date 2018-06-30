@@ -24,7 +24,7 @@ body {
   background: #000;
 }
 
-.form1 table {
+.ticket1 table {
   margin: 2em;
   border-collapse: collapse;
   text-align: center;
@@ -32,93 +32,106 @@ body {
   /* width: 100%; */
 }
 
-#th3 {
+.ticket1 .th3 {
   width: 34mm;
 }
 
-#th11 {
+.ticket1 .th11 {
   width: 25mm;
 }
 
-#th12 {
+.ticket1 .th12 {
   width: 23mm;
 }
 
-#th14 {
+.ticket1 .th14 {
   width: 24mm;
 }
 
-#th13 {
+.ticket1 .th13 {
   width: 19mm;
 }
 
-.form1 th {
+.ticket1 th {
   padding: 3px .8em;
   border: solid 1px orange;
   font-weight: normal;
-  font-size: 60%;
+  font-size: 80%;
   height: 3.8mm;
 }
 
-.form1 td {
+.ticket1 td {
   padding: 3px .8em;
   border: solid 1px orange;
   height: 7mm;
 }
 
-td.td13 {
+.ticket1 td.td13 {
   text-align: right;
   height: 9mm;
 }
 
-#td4 {
-  text-align: right;
-  padding: 0.5em 1.2em;
+.ticket1 .td4 {
+  height: 13mm;
+  border-left: 0;
 }
 
-#td7 {
+.ticket1 .td4_1 {
+  text-align: right;
+  border-right: 0;
+}
+
+.ticket1 .td4_2 {
+  text-align: right;
+  border-right: 0;
+  border-left: 0;
+}
+
+
+.ticket1 .td7 {
   text-align: right;
 }
 
-#td9 {
+.ticket1 .td9 {
   text-align: right;
 }
 
-#td10 {
-  text-align: right;
+.ticket1 .td10 {
+  text-align: left;
+  font-size: 80%;
 }
 
-#th11 {
+.ticket1 .th11 {
   height: 4.5mm;
 }
 
-#th10 {
+.ticket1 .th10 {
   height: 4.5mm;
 }
 
-.form1 td {
-  font-size: 160%;
+.ticket1 td {
+  font-size: 120%;
 }
 
-td.large {
+.ticket1 td.large {
   border-top: solid 3px orange;
   border-right: solid 3px orange;
   border-bottom: solid 3px orange;
 }
 
-th.large {
+.ticket1 th.large {
   border-top: solid 3px orange;
   border-left: solid 3px orange;
   border-bottom: solid 3px orange;
 }
 
-td.largev {
+.ticket1 td.largev {
   border-left: solid 3px orange;
   border-right: solid 3px orange;
   border-bottom: solid 3px orange;
 }
 
-th.largev {
+.ticket1 th.largev {
   border-top: solid 3px orange;
   border-right: solid 3px orange;
   border-left: solid 3px orange;
