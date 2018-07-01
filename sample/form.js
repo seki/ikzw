@@ -30,17 +30,20 @@ function cloneTicket() {
 function openQRMode() {
   table.style.display = "none";
   canvas.style.display = "block";
+  video.style.display = "block";
   animation = requestAnimationFrame(draw);
 }
 
 function apply_state(state) {
   prepareTicket(table, getDataHeading(), state);
   canvas.style.display = "none";
+  video.style.display = "none";
   table.style.display = "inline";
 }
 
 function openTableMode() {
   canvas.style.display = "none";
+  video.style.display = "none";
   table.style.display = "inline";
 }
 
