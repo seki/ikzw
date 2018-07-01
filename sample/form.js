@@ -138,7 +138,7 @@ function prepareTicket(ticket, heading, value) {
 }
 
 function queryTicket(tid) {
-  load_state("https://www.druby.org/ikzw/sample/data/" + tid + ".json");    
+  load_state("data/" + tid + ".json");    
 }
 
 var load_state = (function(url) {
