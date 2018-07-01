@@ -63,8 +63,8 @@ function draw() {
       count = 0;
       openTableMode();
       tid = memo.data;
-      tid = "18004";
-      load_state("https://www.druby.org/ikzw/sample/data/" + tid + ".json");  
+      queryTicket(tid);
+     
       return;
     }
   } else {
@@ -135,6 +135,11 @@ function prepareTicket(ticket, heading, value) {
   it = table.getElementsByClassName("qr")[0];
   it.innerHTML = "";
   it.appendChild(qr_canvas);
+}
+
+function queryTicket(tid) {
+  tid = "18004";
+  load_state("https://www.druby.org/ikzw/sample/data/" + tid + ".json");    
 }
 
 var load_state = (function(url) {
