@@ -27,8 +27,13 @@ function openQRMode() {
   animation = requestAnimationFrame(draw);
 }
 
+function apply_state(state) {
+  prepareTicket(table, getDataHeading(), state);
+  canvas.style.display = "none";
+  table.style.display = "inline";
+}
+
 function openTableMode() {
-  prepareTicket(table, getDataHeading(), getDataValue());
   canvas.style.display = "none";
   table.style.display = "inline";
 }
@@ -56,7 +61,10 @@ function draw() {
     count = count + 1;
     if (count > 3) {
       count = 0;
-      openTableMode();  
+      openTableMode();
+      tid = memo.data;
+      tid = "18004";
+      load_state("https://www.druby.org/ikzw/sample/data/" + tid + ".json");  
       return;
     }
   } else {
@@ -122,9 +130,36 @@ function MyQR(options) {
 function prepareTicket(ticket, heading, value) {
   applyForm(ticket, heading) 
   applyForm(ticket, value);
-  qr_canvas = MyQR(value.td1);
+  qr_canvas = MyQR(value["td1"]);
 
   it = table.getElementsByClassName("qr")[0];
   it.innerHTML = "";
   it.appendChild(qr_canvas);
 }
+
+var load_state = (function(url) {
+  var x;
+  try {
+      x = new ActiveXObject("Msxml2.XMLHTTP");
+  } catch (e) {
+          try {
+          x = new ActiveXObject("Microsoft.XMLHTTP");
+          } catch (e) {
+          x = null;
+      }
+  }
+  if (!x && typeof XMLHttpRequest != "undefined") {
+      x = new XMLHttpRequest();
+  }
+  if (x) {
+      x.onreadystatechange = function() {
+          if (x.readyState == 4 && x.status == 200) {
+              var state = JSON.parse(x.responseText);
+              apply_state(state);
+         }
+      }
+      x.open("GET", url);
+      x.send(null);
+  }
+});
+

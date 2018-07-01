@@ -37,11 +37,11 @@ body {
 }
 
 .ticket1 .th11 {
-  width: 25mm;
+  width: 23mm;
 }
 
 .ticket1 .th12 {
-  width: 23mm;
+  width: 25mm;
 }
 
 .ticket1 .th14 {
@@ -120,25 +120,29 @@ body {
 }
 
 .ticket1 td.large {
-  border-top: solid 3px orange;
-  border-right: solid 3px orange;
-  border-bottom: solid 3px orange;
+  border-top-width: 3px;
+  border-right-width: 3px;
+  border-bottom-width: 3px;
 }
 
 .ticket1 th.large {
-  border-top: solid 3px orange;
-  border-left: solid 3px orange;
-  border-bottom: solid 3px orange;
+  border-top-width: 3px;
+  border-left-width: 3px;
+  border-bottom-width: 3px;
 }
 
 .ticket1 td.largev {
-  border-left: solid 3px orange;
-  border-right: solid 3px orange;
-  border-bottom: solid 3px orange;
+  border-left-width: 3px;
+  border-right-width: 3px;
+  border-bottom-width: 3px;
 }
 
 .ticket1 th.largev {
-  border-top: solid 3px orange;
-  border-right: solid 3px orange;
-  border-left: solid 3px orange;
+  border-top-width: 3px;
+  border-right-width: 3px;
+  border-left-width: 3px;
+}
+
+.ticket1 th.th7 {
+  border-top-width: 1px;
 }
