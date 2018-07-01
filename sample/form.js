@@ -21,6 +21,12 @@ function applyForm(table, head) {
 
 table.style.display = "none";
 
+function cloneTicket() {
+  node = table.querySelector("table");
+  clone = document.importNode(node, true);
+  table.insertBefore(clone, node);
+}
+
 function openQRMode() {
   table.style.display = "none";
   canvas.style.display = "block";
