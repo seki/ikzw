@@ -133,7 +133,43 @@ function MyQR(options) {
     // return just built canvas
     return canvas;
   }
-  return createCanvas();
+
+  var createTable	= function(){
+    // create the qrcode itself
+    var qrcode	= new QRCode(options.typeNumber, options.correctLevel);
+    qrcode.addData(options.text);
+    qrcode.make();
+    
+    // create table element
+    var table = document.createElement('table');
+    table.style.width = options.width+"px";
+    table.style.height = options.height+"px";
+    table.style.border = "0px";
+    table.style.borderCollapse = "collapse";
+    table.style.backgroundColor = options.background;
+    
+    // compute tileS percentage
+    var tileW	= options.width / qrcode.getModuleCount();
+    var tileH	= options.height / qrcode.getModuleCount();
+
+    // draw in the table
+    for(var row = 0; row < qrcode.getModuleCount(); row++ ){
+      var _row = document.createElement('tr');
+      _row.style.height = tileH + "px";
+      table.appendChild(_row);
+      
+      for(var col = 0; col < qrcode.getModuleCount(); col++ ){
+        var td = document.createElement('td');
+        td.style.width = tileW+"px";
+        td.style.backgroundColor = qrcode.isDark(row, col) ? options.foreground : options.background
+        _row.appendChild(td);
+      }	
+    }
+    // return just built canvas
+    return table;
+  }
+
+  return createTable();
 };
 
 function prepareTicket(ticket, heading, value) {
