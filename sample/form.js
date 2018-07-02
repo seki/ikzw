@@ -169,7 +169,7 @@ function MyQR(options) {
     return table;
   }
 
-  return createTable();
+  return createCanvas();
 };
 
 function prepareTicket(ticket, heading, value) {
