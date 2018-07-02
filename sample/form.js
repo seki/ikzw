@@ -147,7 +147,9 @@ function prepareTicket(ticket, heading, value) {
 }
 
 function queryTicket(tid) {
-  load_state("data/" + tid + ".json");    
+  if (tid.match(/^[\w-]+$/)) {
+    load_state("data/" + tid + ".json");
+  }
 }
 
 var load_state = (function(url) {
