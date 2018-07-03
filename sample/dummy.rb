@@ -23,16 +23,19 @@ class Seed
 end
 
 class IDSeq
-  def initialize(start=18000)
-    @offset = start
-    @skip = 10
-    @last = rand(@skip) + 1
-  end
-
-  def next
-    @offset + @last
-  ensure
-    @last += rand(@skip) + 1
+  include Enumerable
+  def each(seq=18000)
+    while true
+      seq += 1
+      sub_seq = rand(2) + rand(2) + rand(2) + rand(2) + rand(2) + rand(2) + rand(2) + rand(2) + rand(2) + rand(2)
+      if sub_seq <= 5
+        yield(seq.to_s)
+      else
+        (sub_seq - 4).times do |n|
+          yield("#{seq}-#{n + 1}")
+        end
+      end
+    end
   end
 end
 
@@ -78,10 +81,12 @@ def dummy(idseq, seed)
   }
 end
 
+srand(1)
 seed = Seed.new(ARGV.shift)
-idseq = IDSeq.new
-10.times do
+idseq = IDSeq.new.to_enum
+30.times do
   tid = idseq.next
+  puts tid
   File.open("#{tid}.json", 'w') {|fp| fp.puts(dummy(tid, seed).to_json)}
 end
 
