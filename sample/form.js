@@ -12,19 +12,19 @@ let imgData, data, ave, animation, count;
 
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
-function applyForm(table, head) {
+function applyForm(root, head) {
   for (var name in head) {
-    node = table.getElementsByClassName(name);
-    node[0].textContent = head[name];
+    node = root.querySelector("." + name);
+    node.textContent = head[name];
   }
 };
 
 table.style.display = "none";
 
 function cloneTicket() {
-  node = table.querySelector("table");
+  node = document.querySelector("#ticket_detail").content;
   clone = document.importNode(node, true);
-  table.insertBefore(clone, node);
+  return table.insertBefore(clone, table.firstChild);
 }
 
 function openQRMode() {
@@ -214,3 +214,5 @@ var load_state = (function(url) {
   }
 });
 
+it = cloneTicket();
+prepareTicket(table, getDataHeading(), getDataValue());
