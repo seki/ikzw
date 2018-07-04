@@ -12,17 +12,10 @@ let imgData, data, ave, animation, count;
 
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
-function applyForm(root, head) {
-  for (var name in head) {
-    node = root.querySelector("." + name);
-    node.textContent = head[name];
-  }
-};
-
 table.style.display = "none";
 
 function cloneTicket() {
-  node = document.querySelector("#ticket_detail").content;
+  node = document.querySelector("#ticket_detail_template").content;
   clone = document.importNode(node, true);
   return table.insertBefore(clone, table.firstChild);
 }
@@ -35,7 +28,8 @@ function openQRMode() {
 }
 
 function apply_state(state) {
-  prepareTicket(table, getDataHeading(), state);
+  let node = cloneTicket();
+  prepareTicket(table, state);
   canvas.style.display = "none";
   video.style.display = "none";
   table.style.display = "inline";
@@ -134,52 +128,20 @@ function MyQR(options) {
     return canvas;
   }
 
-  var createTable	= function(){
-    // create the qrcode itself
-    var qrcode	= new QRCode(options.typeNumber, options.correctLevel);
-    qrcode.addData(options.text);
-    qrcode.make();
-    
-    // create table element
-    var table = document.createElement('table');
-    table.style.width = options.width+"px";
-    table.style.height = options.height+"px";
-    table.style.border = "0px";
-    table.style.borderCollapse = "collapse";
-    table.style.backgroundColor = options.background;
-    
-    // compute tileS percentage
-    var tileW	= options.width / qrcode.getModuleCount();
-    var tileH	= options.height / qrcode.getModuleCount();
-
-    // draw in the table
-    for(var row = 0; row < qrcode.getModuleCount(); row++ ){
-      var _row = document.createElement('tr');
-      _row.style.height = tileH + "px";
-      table.appendChild(_row);
-      
-      for(var col = 0; col < qrcode.getModuleCount(); col++ ){
-        var td = document.createElement('td');
-        td.style.width = tileW+"px";
-        td.style.backgroundColor = qrcode.isDark(row, col) ? options.foreground : options.background
-        _row.appendChild(td);
-      }	
-    }
-    // return just built canvas
-    return table;
-  }
-
   return createCanvas();
 };
 
-function prepareTicket(ticket, heading, value) {
-  applyForm(ticket, heading) 
-  applyForm(ticket, value);
-  qr_canvas = MyQR(value["td1"]);
-
-  it = table.getElementsByClassName("qr")[0];
-  it.innerHTML = "";
-  it.appendChild(qr_canvas);
+function prepareTicket(ticket, value) {
+  let table = ticket.querySelector(".ticket_detail");
+  for (var td of table.querySelectorAll("td")) {
+    let key = td.classList[0];
+    let v = value[key];
+    td.textContent = v;
+  }
+  let qr_canvas = MyQR(value["td1"]);
+  let qr = table.querySelector(".qr");
+  qr.innerHTML = "";
+  qr.appendChild(qr_canvas);
 }
 
 function queryTicket(tid) {
@@ -215,4 +177,3 @@ var load_state = (function(url) {
 });
 
 it = cloneTicket();
-prepareTicket(table, getDataHeading(), getDataValue());
