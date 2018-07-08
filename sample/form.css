@@ -21,7 +21,8 @@ body {
   display: block;
   position: absolute;
   top: 20; left: 0;
-  width: 80%; height: 100%;
+  width: 50%; 
+  height: 50%;
   background: #000;
 }
 
