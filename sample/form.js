@@ -43,6 +43,7 @@ function openTableMode() {
   canvas.style.display = "none";
   video.style.display = "none";
   table.style.display = "inline";
+  cancelAnimationFrame(animation);
 }
 
 function successCallback(stream) {
