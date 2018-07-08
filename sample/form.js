@@ -37,6 +37,7 @@ function apply_state(state) {
   canvas.style.display = "none";
   video.style.display = "none";
   table.style.display = "inline";
+  cancelAnimationFrame(animation);
 }
 
 function openTableMode() {
