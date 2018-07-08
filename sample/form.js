@@ -150,7 +150,7 @@ function prepareTicket(ticket, value) {
 
 function queryTicket(tid) {
   if (tid.match(/^[\w-]+$/)) {
-    load_state("/cgi-bin/pond.rb/api/" + tid + "/");
+    load_state("/cgi-bin/pond/api/" + tid + "/");
   }
 }
 
