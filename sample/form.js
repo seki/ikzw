@@ -20,6 +20,10 @@ function cloneTicket() {
   return table.insertBefore(clone, table.firstChild);
 }
 
+function clearTicket() {
+  table.innerHTML = ""
+}
+
 function openQRMode() {
   table.style.display = "none";
   canvas.style.display = "block";
@@ -146,7 +150,7 @@ function prepareTicket(ticket, value) {
 
 function queryTicket(tid) {
   if (tid.match(/^[\w-]+$/)) {
-    load_state("data/" + tid + ".json");
+    load_state("/cgi-bin/pond.rb/api/" + tid + "/");
   }
 }
 

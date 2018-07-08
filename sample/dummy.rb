@@ -90,4 +90,3 @@ idseq = IDSeq.new.to_enum
   File.open("#{tid}.json", 'w') {|fp| fp.puts(dummy(tid, seed).to_json)}
 end
 
-
