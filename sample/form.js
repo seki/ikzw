@@ -9,10 +9,10 @@ const medias = {audio : false, video : {
       table  = document.getElementById("table1");
 
 let imgData, data, ave, animation, count;
-
 navigator.getUserMedia(medias, successCallback, errorCallback);
-
 table.style.display = "none";
+
+let curr_ticket;
 
 function cloneTicket() {
   node = document.querySelector("#ticket_detail_template").content;
@@ -20,30 +20,23 @@ function cloneTicket() {
   return table.insertBefore(clone, table.firstChild);
 }
 
-function clearTicket() {
-  table.innerHTML = ""
-}
-
 function openQRMode() {
   table.style.display = "none";
   canvas.style.display = "block";
-  video.style.display = "block";
+  video.style.display = "none";
   animation = requestAnimationFrame(draw);
 }
 
 function apply_state(state) {
-  let node = cloneTicket();
-  prepareTicket(table, state);
-  canvas.style.display = "none";
-  video.style.display = "none";
-  table.style.display = "inline";
-  cancelAnimationFrame(animation);
+  curr_ticket = state;
+  prepareTicket(table, curr_ticket);
+  openTableMode();
 }
 
 function openTableMode() {
   canvas.style.display = "none";
   video.style.display = "none";
-  table.style.display = "inline";
+  table.style.display = "block";
   cancelAnimationFrame(animation);
 }
 
@@ -68,7 +61,7 @@ function draw() {
   memo = jsQR(imgData.data, imgData.width, imgData.height);
   if (memo) {
     count = count + 1;
-    if (count > 3) {
+    if (count > 6) {
       count = 0;
       openTableMode();
       tid = memo.data;
@@ -150,10 +143,38 @@ function prepareTicket(ticket, value) {
   qr.appendChild(qr_canvas);
 }
 
-function queryTicket(tid) {
+function fixedEncodeURIComponent (str) {
+  return encodeURIComponent(str).replace(/[!'()*]/g, function(c) {
+    return '%' + c.charCodeAt(0).toString(16);
+  });
+}
+
+function queryTicketURL(tid) {
   if (tid.match(/^[\w-]+$/)) {
-    load_state("/cgi-bin/pond/api/" + tid + "/");
+    return "/cgi-bin/pond/api/" + tid + "/";
+  } else {
+    return null;
   }
+}
+
+function queryTicket(tid) {
+  url = queryTicketURL(tid);
+  if (url) {
+    load_state(url);
+  }
+}
+
+function addLogTicket(tid, stage, event) {
+  url = queryTicketURL(tid);
+  if (url) {
+    stage_str = fixedEncodeURIComponent(stage);
+    url = url + '?tofu_id=api;tofu_cmd=' + event + ';stage=' + stage_str;
+    load_state(url);
+  }
+}
+
+function startLog(a, b) {
+  addLogTicket('18004', '切る', 'open_event');
 }
 
 var load_state = (function(url) {
@@ -182,4 +203,4 @@ var load_state = (function(url) {
   }
 });
 
-it = cloneTicket();
+cloneTicket();

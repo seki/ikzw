@@ -45,12 +45,19 @@ class PondDrip
     @drip.write({key => value}, tid, 'value')
   end
 
+  def add_open_event(tid, stage, time=Time.now, detail=nil)
+    add_event(tid, stage, 'open', time, detail)
+  end
+
+  def add_close_event(tid, stage, time=Time.now, detail=nil)
+    add_event(tid, stage, 'close', time, detail)
+  end
+
   def add_event(tid, stage, event, time=Time.now, detail=nil)
     value = {'stage' => stage, 'event' => event, 'time' => time}
     value['detail'] = detail if detail
-    @drip.write(value, tid, 'log')
+    @drip.write(value, tid, 'log', event)
   end
-
 end
 
 def load_dummy_data(drip)
@@ -77,6 +84,4 @@ if __FILE__ == $0
   sleep(rand())
 
   p db['18004']
-
-
 end

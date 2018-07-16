@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: #fff;
+  background: #efefff;
   font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', '游ゴシック  Medium', meiryo, sans-serif;
 }
 
@@ -27,7 +27,7 @@ body {
 }
 
 .ticket1 table {
-  margin: 2em;
+  margin: 0.5em;
   border-collapse: collapse;
   text-align: center;
   background: #fff;
@@ -147,4 +147,11 @@ body {
 
 .ticket1 th.th7 {
   border-top-width: 1px;
+}
+
+.ticket_detail {
+  display: inline-block;
+  margin: 3em;
+  background-color: white;
+  box-shadow: 5px 5px 9px 1px rgba(0,0,0,0.1);
 }

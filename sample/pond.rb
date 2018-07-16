@@ -1,105 +1,12 @@
 # -*- coding: utf-8 -*-
 require 'tofu'
 require 'json'
-require 'drip'
+require 'pond-drip'
 
 module Pond
-  Stage = [
-    ["room1", ["room1_stage1", "room1_stage2"]],
-    ["room2", ["room2_stage1", "room2_stage2"]],
-    ["room3", ["room3_stage1"]],
-    ["room4", ["room4_stage1", "room4_stage2"]],
-    ["room5", ["room5_stage1", "room5_stage2", "room5_stage3"]],
-    ["room6", ["room6_stage1", "room6_stage2", "room6_stage3"]]
-  ]
 
-  class Ticket
-    def initialize(hash)
-      @value = hash
-      seek_stage
-    end
-    attr_reader :value
-
-    def to_hash
-      @value
-    end
-
-    def [](key)
-      @value[key]
-    end
-
-    def []=(key, value)
-      @value[key] = value
-    end
-
-    def where
-      seek_stage
-      r, s = Stage.assoc(@room)
-      [@room, s]
-    end
-
-    def seek_stage
-      @room, @stage = find_stage
-      if @value.dig(@room, 1)
-        @stage = nil
-      end
-    end
-
-    def find_stage
-      Stage.reverse_each do |room, proc|
-        proc.reverse_each do |key|
-          return [room, key] if @value[key]
-          return [room, nil] if @value[room]
-        end
-      end
-      return nil, nil
-    end
-  end 
-
-  class Place
-    def initialize
-      @ticket = {}
-      build_data
-    end
-
-    def [](key)
-      @ticket[key]
-    end
-
-    def build_data
-      @drip = Drip.new(nil)
-      @origin = @drip.write(true, 'begin')
-      load_dummy_data()
-      cur = @origin
-      while buf = @drip.read(cur, 1, 0)[0]
-        cur, it, tags = buf
-        @ticket[it['td1']] = Ticket.new(it)
-      end
-    end
-
-    def load_dummy_data
-      # dummy data
-      Dir.glob('data/*.json') do |name|
-        json = File.read(name)
-        ti = JSON.parse(json)
-        @drip.write(ti, ti['td1'])
-      end
-    end
-
-    def start_stage(key, stage)
-      ti = @ticket[key]
-      ti[stage] = [Time.now]
-      p ti.where
-    end
-
-    def end_stage(key, stage)
-      ti = @ticket[key]
-      ary = ti[stage]
-      ary[1] = Time.now
-    end
-  end
-
-  DB = Place.new
+  DB = PondDrip.new(nil)
+  load_dummy_data(DB.drip)
 
   class PondSession < Tofu::Session
     def initialize(bartender, hint='')
@@ -129,7 +36,7 @@ module Pond
       context.res_header('content-type', 'application/json')
       tid = ticket_id(context)
       if tid
-        body = DB[tid].to_hash.to_json
+        body = DB[tid].to_json
       else
         body = {'list' => 'not implemented'}.to_json
       end
@@ -151,17 +58,37 @@ module Pond
       'api'
     end
 
-    def do_start(context, params)
+    def do_open_event(context, params)
       tid = ticket_id(context)
       return unless tid
       stage ,= params['stage']
       return unless stage
-      DB.start_stage(tid, stage)
+      stage.force_encoding('utf-8')
+      DB.add_open_event(tid, stage, Time.now)
+    end
+
+    def do_close_event(context, params)
+      tid = ticket_id(context)
+      return unless tid
+      stage ,= params['stage']
+      return unless stage
+      stage.force_encoding('utf-8')
+      DB.add_close_event(tid, stage, Time.now)
     end
   end
 
   class BaseTofu < Tofu::Tofu
     set_erb(__dir__ + '/table.html')
+  end
+
+  class MyTofulet < Tofu::CGITofulet
+    def [](key)
+      case key
+      when 'drip'
+        return 'DRIPDB'
+      end
+      super(key)
+    end
   end
 end
 
@@ -173,7 +100,7 @@ if __FILE__ == $0
   end
   uri = ARGV.shift || 'druby://localhost:54345'
   tofu = Tofu::Bartender.new(Pond::PondSession, 'pond_' + uri.split(':').last)
-  DRb.start_service(uri, Tofu::CGITofulet.new(tofu))
+  DRb.start_service(uri, Pond::MyTofulet.new(tofu))
   unless $DEBUG
     STDIN.reopen('/dev/null')
     STDOUT.reopen('/dev/null', 'w')

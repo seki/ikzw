@@ -11,7 +11,8 @@
 </head>
 <body>
   <template id="ticket_detail_template">
-    <table class="ticket_detail">
+    <div class="ticket_detail">
+    <table>
         <tr>
           <td rowspan=2 class="qr"></td>
           <th class="th1">伝票番号</th>
@@ -76,11 +77,10 @@
           <td class="td15 large">td15</td>
         </tr>
       </table>
+      </div>
     </template>
     <input type="button" id="openQR" value="open QR" onclick="openQRMode();"/>
     <input type="button" id="openTable" value="open Table" onclick="openTableMode();"/>
-    <input type="button" id="cloneTicket" value="clone Ticket" onclick="cloneTicket();"/>
-    <input type="button" id="clearTicket" value="clear Ticket" onclick="clearTicket();"/>
     <input type="text" onchange="queryTicket(this.value)" />
 
     <a onclick="queryTicket('18004')">18004</a>
@@ -90,12 +90,29 @@
   <div class="ticket1" id="table1">
   </div>
 
-  <canvas id="canvas"></canvas>
-  <div id="videobox">
-    <video id="video" autoplay playsinline></video>
+  <div class="logger">
+    <div class="room1">
+      <div class="stage1">
+        <input class="start" type="button" value="開始" onclick="startLog('room1', 'stage1');" />
+        <span class="desc">Stage1</span>
+        <input class="stop" type="button" value="終了" onclick="stopLog('room1', 'stage1');" />
+      </div>
+      <div class="stage2">
+          <input class="start" type="button" value="開始" onclick="startLog('room1', 'stage2');" />
+          <span class="desc">Stage2</span>
+          <input class="stop" type="button" value="終了" onclick="stopLog('room1', 'stage2');" />
+        </div>
+      </div>
   </div>
-  <script type="text/javascript" src="render.qrcode.min.js"></script>
 
+  <div id="qr_reader">
+    <canvas id="canvas"></canvas>
+    <div id="videobox">
+      <video id="video" autoplay playsinline></video>
+    </div>
+  </div>
+
+  <script src="render.qrcode.min.js"></script>
   <script src="jsQR.js"></script>
   <script src="form.js"></script>
 </body>
