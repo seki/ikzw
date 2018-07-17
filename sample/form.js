@@ -21,6 +21,7 @@ function cloneTicket() {
 }
 
 function openQRMode() {
+  curr_tickeet = null;
   table.style.display = "none";
   canvas.style.display = "block";
   video.style.display = "none";
@@ -174,8 +175,17 @@ function addLogTicket(tid, stage, event) {
 }
 
 function startLog(a, b) {
-  addLogTicket('18004', '切る', 'open_event');
+  if (curr_ticket) {
+    addLogTicket(curr_ticket['td1'], '切る', 'open_event');
+  }
 }
+
+function stopLog(a, b) {
+  if (curr_ticket) {
+    addLogTicket(curr_ticket['td1'], '切る', 'close_event');
+  }
+}
+
 
 var load_state = (function(url) {
   var x;

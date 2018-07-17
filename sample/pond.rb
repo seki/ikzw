@@ -3,6 +3,13 @@ require 'tofu'
 require 'json'
 require 'pond-drip'
 
+class Time
+  def to_json(*a)
+    # strftime('%Y-%m-%d %H:%M').to_json(*a)
+    (to_f * 1000).to_json(*a)
+  end
+end
+
 module Pond
 
   DB = PondDrip.new(nil)
