@@ -155,3 +155,28 @@ body {
   background-color: white;
   box-shadow: 5px 5px 9px 1px rgba(0,0,0,0.1);
 }
+
+.ticket_log {
+  width: 100mm;
+  text-align: center;
+}
+
+.ticket_log .description {
+  display: block;
+}
+
+.ticket_log .open_button {
+  display: inline-block;
+  margin: 0.1em;
+  padding: 1em 3em;
+  background-color: #7f7;
+  border: solid 2px green;
+}
+
+.ticket_log .close_button {
+  display: inline-block;
+  margin: 0.1em;
+  padding: 1em 3em;
+  background-color: #f77;
+  border: solid 2px red;
+}

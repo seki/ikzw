@@ -6,18 +6,28 @@ const medias = {audio : false, video : {
       video  = document.getElementById("video"),
       canvas = document.getElementById("canvas"),
       ctx    = canvas.getContext("2d"),
-      table  = document.getElementById("table1");
+      table  = document.getElementById("table1"),
+      logger = document.getElementById("logger");
 
 let imgData, data, ave, animation, count;
 navigator.getUserMedia(medias, successCallback, errorCallback);
 table.style.display = "none";
 
 let curr_ticket;
+let curr_room;
 
 function cloneTicket() {
   node = document.querySelector("#ticket_detail_template").content;
   clone = document.importNode(node, true);
   return table.insertBefore(clone, table.firstChild);
+}
+
+function cloneLog(str) {
+  node = document.querySelector("#ticket_log_template").content;
+  clone = document.importNode(node, true);
+  it = clone.querySelector(".description");
+  it.textContent = str;
+  return logger.insertBefore(clone, logger.firstChild);
 }
 
 function openQRMode() {
@@ -214,3 +224,4 @@ var load_state = (function(url) {
 });
 
 cloneTicket();
+cloneLog("切る");

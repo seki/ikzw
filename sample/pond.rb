@@ -11,7 +11,6 @@ class Time
 end
 
 module Pond
-
   DB = PondDrip.new(nil)
   load_dummy_data(DB.drip)
 
@@ -53,7 +52,6 @@ module Pond
     end
 
     def ticket_id(context)
-      p context.req_path_info
       if /\/api\/([\w-]+)\// =~ context.req_path_info 
         return $1
       else

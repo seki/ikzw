@@ -25,15 +25,19 @@ class PondDrip
   def [](tid)
     hash = {}
     log = []
+    stage = Hash.new {|h, k| h[k] = Array.new}
     retrieve(tid) do |v, tags|
       case tags[0]
       when 'value'
         hash.update(v)
       when 'log'
         log << v
+        stage[v['stage']].unshift([v['event'], v['time']])
       end
     end
+
     hash['log'] = log
+    hash['stage'] = stage
     hash
   end
 
@@ -71,17 +75,17 @@ end
 if __FILE__ == $0
   db = PondDrip.new(nil)
   load_dummy_data(db.drip)
-  p db['18004']
+  # p db['18004']
 
   db.update_value('18004', 'td8', '20kg')
-  db.add_event('18004', 'stage1', 'open')
-  sleep(rand())
-  db.add_event('18004', 'stage1', 'pause')
-  sleep(rand())
-  db.add_event('18004', 'stage1', 'resume')
-  sleep(rand())
-  db.add_event('18004', 'stage1', 'done')
-  sleep(rand())
+  db.add_open_event('18004', '切る')
+  db.add_close_event('18004', '切る')
+  db.add_open_event('18004', '煮る')
+  db.add_close_event('18004', '煮る')
 
-  p db['18004']
+  # p db['18004']
+
+  it = db['18004']
+
+  p it['stage']['煮る']
 end
