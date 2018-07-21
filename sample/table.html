@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="form.css" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-
 </head>
 <body>
   <template id="ticket_detail_template">
@@ -82,8 +81,8 @@
     <template id="ticket_log_template">
       <div class="ticket_log">
         <span class="description"></span>
-        <div class="open_button">開始</div>
-        <div class="close_button">終了</div>
+        <button class="open_button" onclick="open_button_cb(this);">開始</button>
+        <button class="close_button" onclick="close_button_cb(this);">終了</button>
         <div class="history">
           <ul></ul>
         </div>

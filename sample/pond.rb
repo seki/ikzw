@@ -90,7 +90,7 @@ module Pond
     def [](key)
       case key
       when 'drip'
-        return 'DRIPDB'
+        return DB
       end
       super(key)
     end

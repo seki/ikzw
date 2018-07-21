@@ -11,10 +11,11 @@ const medias = {audio : false, video : {
 
 let imgData, data, ave, animation, count;
 navigator.getUserMedia(medias, successCallback, errorCallback);
+
 table.style.display = "none";
 
 let curr_ticket;
-let curr_room;
+let curr_room = [["重さを測る"]];
 
 function cloneTicket() {
   node = document.querySelector("#ticket_detail_template").content;
@@ -22,11 +23,34 @@ function cloneTicket() {
   return table.insertBefore(clone, table.firstChild);
 }
 
+function timeStr(f) {
+  let d = new Date(f);
+  let hour  = ( d.getHours()   < 10 ) ? '0' + d.getHours()   : d.getHours();
+  let min   = ( d.getMinutes() < 10 ) ? '0' + d.getMinutes() : d.getMinutes();
+  return hour + ':' + min;
+}
+
 function cloneLog(str) {
   node = document.querySelector("#ticket_log_template").content;
   clone = document.importNode(node, true);
-  it = clone.querySelector(".description");
-  it.textContent = str;
+  clone.querySelector(".description").textContent = str;
+  let open_pb = clone.querySelector(".open_button");
+  let close_pb = clone.querySelector(".close_button");
+  let ary = curr_ticket['stage'][str];
+  if (ary) {
+    if (ary[0][0] == 'open') {
+      open_pb.style.background = "#efe";
+      open_pb.textContent = open_pb.textContent + " " + timeStr(ary[0][1]);
+    } else {
+      if (ary[0][0] == 'close') {
+        open_pb.style.background = "#efe";
+        close_pb.style.background = "#fee";
+        close_pb.textContent = close_pb.textContent + " " + timeStr(ary[0][1]);
+      }
+    }
+  } else {
+    close_pb.style.background = "#fee";
+  }
   return logger.insertBefore(clone, logger.firstChild);
 }
 
@@ -152,6 +176,11 @@ function prepareTicket(ticket, value) {
   let qr = table.querySelector(".qr");
   qr.innerHTML = "";
   qr.appendChild(qr_canvas);
+
+  logger.innerHTML = "";
+  for (var i in curr_room) {
+    cloneLog(curr_room[i][0]);
+  }
 }
 
 function fixedEncodeURIComponent (str) {
@@ -184,18 +213,20 @@ function addLogTicket(tid, stage, event) {
   }
 }
 
-function startLog(a, b) {
+function event_button_cb(node, event) {
   if (curr_ticket) {
-    addLogTicket(curr_ticket['td1'], '切る', 'open_event');
+    stage = node.parentNode.querySelector(".description").textContent;
+    addLogTicket(curr_ticket['td1'], stage, event);
   }
 }
 
-function stopLog(a, b) {
-  if (curr_ticket) {
-    addLogTicket(curr_ticket['td1'], '切る', 'close_event');
-  }
+function open_button_cb(node) {
+  event_button_cb(node, 'open_event')
 }
 
+function close_button_cb(node) {
+  event_button_cb(node, 'close_event')
+}
 
 var load_state = (function(url) {
   var x;
@@ -224,4 +255,3 @@ var load_state = (function(url) {
 });
 
 cloneTicket();
-cloneLog("切る");
