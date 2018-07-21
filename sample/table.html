@@ -96,16 +96,20 @@
     <a onclick="queryTicket('18017')">18017</a>
     <a onclick="queryTicket('18021')">18021</a>
 
-  <div class="ticket1" id="table1">
-  </div>
-
-  <div class="logger" id="logger">
+  <div id="ticket_pane">
+      <div class="ticket1" id="table1">
+      </div>
+      
+      <div class="logger" id="logger">
+      </div>
   </div>
 
   <div id="qr_reader">
-    <canvas id="canvas"></canvas>
-    <div id="videobox">
-      <video id="video" autoplay playsinline></video>
+    <div id="video_pane">
+      <canvas id="canvas"></canvas>
+      <div id="videobox">
+        <video id="video" autoplay playsinline></video>
+      </div>
     </div>
   </div>
 

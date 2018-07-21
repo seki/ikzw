@@ -6,16 +6,17 @@ const medias = {audio : false, video : {
       video  = document.getElementById("video"),
       canvas = document.getElementById("canvas"),
       ctx    = canvas.getContext("2d"),
+      ticket_pane = document.getElementById("ticket_pane"),
       table  = document.getElementById("table1"),
       logger = document.getElementById("logger");
 
 let imgData, data, ave, animation, count;
 navigator.getUserMedia(medias, successCallback, errorCallback);
 
-table.style.display = "none";
+ticket_pane.style.display = "none";
 
 let curr_ticket;
-let curr_room = [["重さを測る"]];
+let curr_room = [["重さを測る"], ["帰る"], ["データ作成"]];
 
 function cloneTicket() {
   node = document.querySelector("#ticket_detail_template").content;
@@ -30,7 +31,7 @@ function timeStr(f) {
   return hour + ':' + min;
 }
 
-function cloneLog(str) {
+function cloneLog(str, fwd_disable) {
   node = document.querySelector("#ticket_log_template").content;
   clone = document.importNode(node, true);
   clone.querySelector(".description").textContent = str;
@@ -41,6 +42,7 @@ function cloneLog(str) {
     if (ary[0][0] == 'open') {
       open_pb.style.background = "#efe";
       open_pb.textContent = open_pb.textContent + " " + timeStr(ary[0][1]);
+      fwd_disable = true;
     } else {
       if (ary[0][0] == 'close') {
         open_pb.style.background = "#efe";
@@ -49,14 +51,19 @@ function cloneLog(str) {
       }
     }
   } else {
+    if (fwd_disable) {
+      open_pb.style.background = "#efe";
+    }
     close_pb.style.background = "#fee";
+    fwd_disable = true;
   }
-  return logger.insertBefore(clone, logger.firstChild);
+  logger.insertBefore(clone, null);
+  return fwd_disable;
 }
 
 function openQRMode() {
   curr_tickeet = null;
-  table.style.display = "none";
+  ticket_pane.style.display = "none";
   canvas.style.display = "block";
   video.style.display = "none";
   animation = requestAnimationFrame(draw);
@@ -71,7 +78,7 @@ function apply_state(state) {
 function openTableMode() {
   canvas.style.display = "none";
   video.style.display = "none";
-  table.style.display = "block";
+  ticket_pane.style.display = "block";
   cancelAnimationFrame(animation);
 }
 
@@ -178,8 +185,9 @@ function prepareTicket(ticket, value) {
   qr.appendChild(qr_canvas);
 
   logger.innerHTML = "";
+  let fwd_disable = false;
   for (var i in curr_room) {
-    cloneLog(curr_room[i][0]);
+    fwd_disable = cloneLog(curr_room[i][0], fwd_disable);
   }
 }
 
