@@ -7,6 +7,7 @@ const medias = {audio : false, video : {
       canvas = document.getElementById("canvas"),
       ctx    = canvas.getContext("2d"),
       ticket_pane = document.getElementById("ticket_pane"),
+      qr_pane = document.getElementById("qr_reader"),
       table  = document.getElementById("table1"),
       logger = document.getElementById("logger");
 
@@ -53,8 +54,10 @@ function cloneLog(str, fwd_disable) {
   } else {
     if (fwd_disable) {
       open_pb.style.background = "#efe";
+      open_pb.disabled = true;
     }
     close_pb.style.background = "#fee";
+    close_pb.disabled = true;
     fwd_disable = true;
   }
   logger.insertBefore(clone, null);
@@ -64,8 +67,7 @@ function cloneLog(str, fwd_disable) {
 function openQRMode() {
   curr_tickeet = null;
   ticket_pane.style.display = "none";
-  canvas.style.display = "block";
-  video.style.display = "none";
+  qr_pane.style.display = "block";
   animation = requestAnimationFrame(draw);
 }
 
@@ -76,8 +78,7 @@ function apply_state(state) {
 }
 
 function openTableMode() {
-  canvas.style.display = "none";
-  video.style.display = "none";
+  qr_pane.style.display = "none";
   ticket_pane.style.display = "block";
   cancelAnimationFrame(animation);
 }
@@ -103,7 +104,7 @@ function draw() {
   memo = jsQR(imgData.data, imgData.width, imgData.height);
   if (memo) {
     count = count + 1;
-    if (count > 6) {
+    if (count > 3) {
       count = 0;
       openTableMode();
       tid = memo.data;
